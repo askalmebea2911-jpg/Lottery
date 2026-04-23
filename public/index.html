@@ -463,13 +463,14 @@
     let t = translations.am;
 
     function updateTime() {
-        const now = new Date();
-        const ethiopiaTime = new Date(now.getTime() + (3 * 60 * 60 * 1000));
-        const timeString = ethiopiaTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        const dateString = ethiopiaTime.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-        const timeDisplay = document.getElementById('timeDisplay');
-        if(timeDisplay) timeDisplay.innerHTML = `🕒 ${dateString} | ${timeString} (ኢትዮጵያ)`;
-    }
+    const now = new Date();
+    // ትክክለኛውን የኢትዮጵያ ሰዓት ለማግኘት
+    const ethiopiaTime = new Date(now.toLocaleString("en-US", {timeZone: "Africa/Addis_Ababa"}));
+    const timeString = ethiopiaTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    const dateString = ethiopiaTime.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    const timeDisplay = document.getElementById('timeDisplay');
+    if(timeDisplay) timeDisplay.innerHTML = `🕒 ${dateString} | ${timeString} (ኢትዮጵያ)`;
+}
     setInterval(updateTime, 1000);
     updateTime();
 
